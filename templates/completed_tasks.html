@@ -1,0 +1,34 @@
+{% include "header.html" %}
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('../static/assets/img/completed-tasks-bg.jpg')">
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="site-heading">
+          <h1>Completed Tasks</h1>
+          <span class="subheading">Review your completed tasks</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<div class="container mt-4">
+    <h1>Completed Tasks</h1>
+    <a href="{{ url_for('get_tasks') }}" class="btn btn-primary mb-4">Back to Tasks</a>
+    <ul class="list-group">
+        {% for task in tasks %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <h5>{{ task.title }}</h5>
+                <p>Completed on: {{ task.completed_date }}</p>
+                <p>{{ task.description }}</p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% include "footer.html" %}
