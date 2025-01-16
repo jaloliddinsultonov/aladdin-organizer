@@ -198,7 +198,7 @@ def logout():
 def get_tasks():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
-    tasks = Task.query.filter_by(creator_id=current_user.id).all()
+    tasks = Task.query.filter_by(creator_id=current_user.id, completed=False).all()
     return render_template("tasks.html", tasks=tasks, current_user=current_user)
 
 
@@ -253,7 +253,7 @@ def delete_task(task_id):
     return redirect(url_for("get_tasks"))
 
 
-@app.route("/task/complete/<int:task_id>")
+@app.route("/task/complete/<int:task_id>", methods=["POST"])
 def complete_task(task_id):
     task = db.get_or_404(Task, task_id)
     if task.creator_id != current_user.id:
@@ -385,3 +385,5 @@ def send_email(name, email, phone, message):
 
 if __name__ == "__main__":
     app.run(debug=False, port=5002)
+
+

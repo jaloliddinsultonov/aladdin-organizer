@@ -19,6 +19,11 @@
     <h1>My Tasks</h1>
     <a href="{{ url_for('new_task') }}" class="btn btn-primary mb-4">Add New Task</a>
     <ul class="list-group">
+        {% if tasks|length == 0 %}
+        <li class="list-group-item">
+            <p>No tasks to show. Add a new task!</p>
+        </li>
+        {% else %}
         {% for task in tasks %}
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <div>
@@ -27,14 +32,15 @@
                 <p>{{ task.description }}</p>
             </div>
             <div>
-                {% if not task.completed %}
-                <a href="{{ url_for('complete_task', task_id=task.id) }}" class="btn btn-success btn-sm">Mark as Done</a>
-                {% endif %}
+                <form action="{{ url_for('complete_task', task_id=task.id) }}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-success btn-sm">Mark as Done</button>
+                </form>
                 <a href="{{ url_for('edit_task', task_id=task.id) }}" class="btn btn-warning btn-sm">Edit</a>
                 <a href="{{ url_for('delete_task', task_id=task.id) }}" class="btn btn-danger btn-sm">Delete</a>
             </div>
         </li>
         {% endfor %}
+        {% endif %}
     </ul>
 </div>
 
